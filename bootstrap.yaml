@@ -1,0 +1,32 @@
+- name: Bootstrap development environment
+  hosts: localhost
+
+  tasks:
+  - name: Install packages with brew
+    community.general.homebrew:
+      name:
+        - git
+        - terraform
+        - awscli
+      state: present
+    when: ansible_distribution == "MacOSX"
+  - name: Install packages with casks
+    community.general.homebrew_cask:
+      name:
+        - visual-studio-code
+        - docker
+      state: present
+    when: ansible_distribution == "MacOSX"
+
+  roles:
+  - role: gantsign.visual-studio-code
+    users:
+      - username: jonvickers
+        visual_studio_code_extensions:
+          - "4ops.terraform"
+          - "ms-python.python"
+          - "ms-azuretools.vscode-docker"
+          - "equinusocio.vsc-material-theme-icons"
+          - "eamodio.gitlens"
+        
+            
